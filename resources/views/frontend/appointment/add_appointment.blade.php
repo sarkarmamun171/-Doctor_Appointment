@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +28,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <form action="" method="post">
+                        <form action="{{ route('appointment.store') }}" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="" class="form-label">Appointment No</label>
+                                <input type="text" class="form-control" name="appointment_no">
+                            </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Appointment Date</label>
                                 <input type="date" class="form-control" name="appointment_date">
@@ -70,19 +74,50 @@
                                 <th>Fee</th>
                                 <th>Action</th>
                             </tr>
+                            @foreach ($appointments as $sl=>$appointment)
                             <tr>
-                                <td>1</td>
-                                <td>1/04/055</td>
-                                <td>Mamun</td>
-                                <td>400</td>
-                                <td>Delete</td>
+                                <td>{{ $sl+1 }}</td>
+                                <td>{{ $appointment->appointment_date }}</td>
+                                <td>{{ $appointment->rel_to_doctor->name }}</td>
+                                <td>{{ $appointment->fee }}</td>
+                                <td>
+                                    <div class="d-flex">
+                                        <a href="#" class="btn btn-danger shadow btn-xs sharp "><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
                             </tr>
+                            @endforeach
                         </table>
+                        <div class="col-lg-12">
+                            <form action="{{ route('store.patient') }}" method="post">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Patient Name</label>
+                                    <input type="text" class="form-control" name="patient_name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Patient Phone</label>
+                                    <input type="number" class="form-control" name="patient_phone">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Total Fee</label>
+                                    <input type="text" class="form-control" name="total_fee">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Paid Amount</label>
+                                    <input type="text" class="form-control" name="paid_amount">
+                                </div>
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-info">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://kit.fontawesome.com/56a6d796f4.js" crossorigin="anonymous"></script>
         <script src="{{ asset('forntend/front.js') }}"></script>
         <script>
             $(document).ready(function() {
@@ -131,6 +166,23 @@
                         });
                     }
                 });
+            });
+        </script>
+        <script>
+            document.getElementById('doctor').addEventListener('change', function() {
+                const selectedDoctor = this.options[this.selectedIndex];
+                const fee = selectedDoctor.getAttribute('data-fee');
+                document.getElementById('total_fee').value = fee;
+            });
+
+            document.querySelector('form').addEventListener('submit', function(event) {
+                const paidAmount = parseFloat(document.getElementById('paid_amount').value);
+                const totalFee = parseFloat(document.getElementById('total_fee').value);
+
+                if (paidAmount !== totalFee) {
+                    event.preventDefault();
+                    alert('Paid Amount must be equal to Total Fee');
+                }
             });
         </script>
 </body>

@@ -4,6 +4,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,9 @@ Route::get('/appointment/add',[AppointmentController::class,'add_appointment'])-
 Route::post('/getDoctor',[AppointmentController::class,'getDoctor']);
 Route::post('/get-doctors', [AppointmentController::class, 'getDoctors']);
 Route::post('/get-doctor-info', [AppointmentController::class, 'getDoctorInfo']);
+Route::post('/appointment/store',[AppointmentController::class,'appointment_store'])->name('appointment.store');
+
+Route::post('/appointment/store/patient',[PatientController::class,'store_patient'])->name('store.patient');
 
 
 

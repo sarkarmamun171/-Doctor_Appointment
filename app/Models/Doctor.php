@@ -13,4 +13,5 @@ class Doctor extends Model
     public function rel_to_department(){
         return $this->belongsTo(Department::class,'department_id');
     }
+    
 }
