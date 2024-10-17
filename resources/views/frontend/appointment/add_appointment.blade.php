@@ -82,7 +82,7 @@
                                 <td>{{ $appointment->fee }}</td>
                                 <td>
                                     <div class="d-flex">
-                                        <a href="#" class="btn btn-danger shadow btn-xs sharp "><i class="fa fa-trash"></i></a>
+                                        <a href="{{ route('appointment.delete',$appointment->id) }}" class="btn btn-danger shadow btn-xs sharp "><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>

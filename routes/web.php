@@ -58,6 +58,7 @@ Route::post('/getDoctor',[AppointmentController::class,'getDoctor']);
 Route::post('/get-doctors', [AppointmentController::class, 'getDoctors']);
 Route::post('/get-doctor-info', [AppointmentController::class, 'getDoctorInfo']);
 Route::post('/appointment/store',[AppointmentController::class,'appointment_store'])->name('appointment.store');
+Route::get('/appointment/delete/{id}',[AppointmentController::class,'appointment_delete'])->name('appointment.delete');
 
 Route::post('/appointment/store/patient',[PatientController::class,'store_patient'])->name('store.patient');
 
