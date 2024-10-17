@@ -16,5 +16,27 @@ class AppointmentController extends Controller
             'doctors'=>$doctors,
         ]);
     }
-   
+    public function getDoctors(Request $request)
+    {
+        $doctors = Doctor::where('department_id', $request->department_id)->get();
+        return response()->json($doctors);
+    }
+
+    public function getDoctorInfo(Request $request)
+    {
+        $doctor = Doctor::find($request->doctor_id);
+
+        if ($doctor) {
+            $isAvailable = $doctor->is_available;
+            $message = $isAvailable ? 'Doctor is available' : 'Doctor is not available';
+            return response()->json([
+                'fee' => $doctor->fee,
+                'isAvailable' => $isAvailable,
+                'message' => $message
+            ]);
+        }
+
+        return response()->json(['error' => 'Doctor not found'], 404);
+    }
+
 }

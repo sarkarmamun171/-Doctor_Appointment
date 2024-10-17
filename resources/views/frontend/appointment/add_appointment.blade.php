@@ -45,7 +45,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="" class="form-label">Select Doctor</label>
-                                <select name="doctor_id" id="doctor_id" class="form-control">
+                                <select name="doctor_id" id="doctor" class="form-control">
                                     <option value="">Select Doctor</option>
                                     @foreach ($doctors as $doctor)
                                         <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
@@ -61,16 +61,76 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>SL</th>
+                                <th>App Date</th>
+                                <th>Doctor Name</th>
+                                <th>Fee</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1/04/055</td>
+                                <td>Mamun</td>
+                                <td>400</td>
+                                <td>Delete</td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="{{ asset('forntend/front.js') }}"></script>
         <script>
-            $('#department').change(function() {
-                var department_id = $(this).val();
-                alert(department_id);
+            $(document).ready(function() {
+                $('#department').change(function() {
+                    var departmentId = $(this).val();
+
+                    if (departmentId) {
+                        $.ajax({
+                            url: '/get-doctors',
+                            type: 'POST',
+                            data: {
+                                department_id: departmentId,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                $('#doctor').empty().append('<option value="">Select Doctor</option>');
+                                $.each(data, function(key, doctor) {
+                                    $('#doctor').append('<option value="' + doctor.id + '">' + doctor.name + '</option>');
+                                });
+                            }
+                        });
+                    }
+                });
+
+                $('#doctor').change(function() {
+                    var doctorId = $(this).val();
+
+                    if (doctorId) {
+                        $.ajax({
+                            url: '/get-doctor-info',
+                            type: 'POST',
+                            data: {
+                                doctor_id: doctorId,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(data) {
+                                $('#fee').val(data.fee);
+                                $('#availability-message').text(data.message);
+
+                                if (!data.isAvailable) {
+                                    $('#addButton').hide();
+                                } else {
+                                    $('#addButton').show();
+                                }
+                            }
+                        });
+                    }
+                });
             });
         </script>
 </body>

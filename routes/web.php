@@ -54,6 +54,8 @@ Route::get('doctor/delete/{id}',[DoctorController::class,'delete_doctor'])->name
 //Appointment
 Route::get('/appointment/add',[AppointmentController::class,'add_appointment'])->name('add.appointment');
 Route::post('/getDoctor',[AppointmentController::class,'getDoctor']);
+Route::post('/get-doctors', [AppointmentController::class, 'getDoctors']);
+Route::post('/get-doctor-info', [AppointmentController::class, 'getDoctorInfo']);
 
 
 
