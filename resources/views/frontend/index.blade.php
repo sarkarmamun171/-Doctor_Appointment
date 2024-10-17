@@ -20,7 +20,7 @@
                 <div class="menu">
                     <a href="{{ route('index') }}" class="active" onclick="closeMenu()">Home</a>
                     <a href="{{ route('doctor.list') }}" onclick="closeMenu()">Doctor</a>
-                    <a href="#" onclick="closeMenu()">Appointment</a>
+                    <a href="{{ route('add.appointment') }}" onclick="closeMenu()">Appointment</a>
                     <i class="fa fa-times close-menu" onclick="closeMenu()"></i>
                 </div>
             </header>

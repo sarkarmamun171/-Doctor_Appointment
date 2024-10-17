@@ -52,7 +52,8 @@ Route::post('doctor/update/{id}',[DoctorController::class,'update_doctor'])->nam
 Route::get('doctor/delete/{id}',[DoctorController::class,'delete_doctor'])->name('delete.doctor');
 
 //Appointment
-Route::get('/appointment/add',[AppointmentController::class,'add_appointment'])->name('add_appointment');
+Route::get('/appointment/add',[AppointmentController::class,'add_appointment'])->name('add.appointment');
+Route::post('/getDoctor',[AppointmentController::class,'getDoctor']);
 
 
 

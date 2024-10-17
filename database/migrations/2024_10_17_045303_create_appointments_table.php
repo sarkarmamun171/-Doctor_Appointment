@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('appointment_no');
             $table->date('appointment_date');
+            $table->string('department_id');
             $table->string('doctor_id');
+            $table->string('fee');
             $table->string('patient_name');
             $table->string('patient_phone');
             $table->string('total_fee');
